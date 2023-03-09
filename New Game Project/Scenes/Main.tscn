@@ -7,7 +7,7 @@
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
-colors = PoolColorArray( 0.84668, 0.586975, 0.30395, 1 )
+colors = PoolColorArray( 0.84668, 0.597952, 0.326889, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -19,7 +19,7 @@ extents = Vector2( 5, 600 )
 script = ExtResource( 4 )
 
 [node name="BackgroundColour" type="Sprite" parent="."]
-position = Vector2( 616, 346 )
+position = Vector2( 614, 346 )
 scale = Vector2( 1.34717, 1089.25 )
 texture = SubResource( 2 )
 
@@ -29,22 +29,21 @@ z_index = 2
 collision_mask = 3
 linear_damp = 1.0
 script = ExtResource( 3 )
-shoot_power = 200
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
 rotation = 1.5708
-polygon = PoolVector2Array( 0, -22, -22, 17, -2, 7, 3, 7, 22, 18 )
+polygon = PoolVector2Array( -6.10352e-05, -17, -17.9999, 15.0001, -1.99997, 6, 2.00003, 5.99997, 19.0001, 15.9999 )
 
 [node name="Shadow" type="Sprite" parent="Player"]
 modulate = Color( 1, 1, 1, 0.545098 )
 rotation = 1.5708
-scale = Vector2( 3, 3 )
+scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 2 )
 offset = Vector2( 0.789, 1.691 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 rotation = 1.5708
-scale = Vector2( 3.19975, 3.15238 )
+scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 1 )
 
 [node name="Walls" type="Node2D" parent="."]

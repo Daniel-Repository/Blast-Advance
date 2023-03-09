@@ -24,17 +24,20 @@ func start():
 	apply_central_impulse(dirtocent * rand_range(40,100))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
-
-
-
-
+func _process(delta: float) -> void:
+	checkLocation()
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	
 	if body.name == "Player":
 		body.queue_free()
 	else:
 		queue_free()
 		body.queue_free()
+
+func checkLocation():
+	if position.x > 1300 or position.x < -400:
+		print("GONE")
+		queue_free()
+	if position.y < -200 or position.y > 900:
+		print("GONE")
+		queue_free()

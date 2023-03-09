@@ -1,6 +1,7 @@
 extends RigidBody2D
 
-export var shoot_power = 100
+export var shootPower = 100
+export var rotateSpeed = 5
 var velocity = Vector2.ZERO
 var bullet = preload("res://Scenes/Bullet.tscn")
 
@@ -8,16 +9,24 @@ var bullet = preload("res://Scenes/Bullet.tscn")
 func _ready() -> void:
 	pass # Replace with function body.
 
-func _physics_process(_delta: float) -> void:
-	look_at(get_global_mouse_position())
-	get_input()
+func _physics_process(delta: float) -> void:
+	#look_at(get_global_mouse_position())
+	get_input(delta)
 
-func get_input():
+func get_input(d):
 	if Input.is_action_just_pressed("ui_select"):
-		apply_central_impulse(-position.direction_to(get_global_mouse_position()) * shoot_power)
+		#apply_central_impulse(-position.direction_to(get_global_mouse_position()) * shootPower)
+		apply_central_impulse(Vector2(-cos(rotation),-sin(rotation)) * shootPower)
 		var b = bullet.instance()
 		b.start(transform.origin,rotation)
 		get_parent().add_child(b)
+	
+	if Input.is_action_pressed("ui_left"):
+		angular_velocity = -1 * rotateSpeed
+	elif Input.is_action_pressed("ui_right"):
+		angular_velocity = 1 * rotateSpeed
+	else:
+		angular_velocity = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
