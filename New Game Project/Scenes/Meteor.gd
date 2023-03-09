@@ -9,6 +9,7 @@ var dirtocent
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	look_at(Vector2(612,300))
+	var rand = rand_range(0.5,3)
 
 func start():
 	randomize()
@@ -25,3 +26,15 @@ func start():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
+
+
+
+
+
+func _on_Area2D_body_entered(body: Node) -> void:
+	
+	if body.name == "Player":
+		body.queue_free()
+	else:
+		queue_free()
+		body.queue_free()

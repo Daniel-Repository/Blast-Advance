@@ -11,7 +11,7 @@ func _ready() -> void:
 func start(_position, _direction):
 	rotation = _direction
 	position = _position
-	velocity = Vector2(-speed, 0).rotated(rotation)
+	velocity = Vector2(speed, 0).rotated(rotation)
 
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)

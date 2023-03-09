@@ -14,7 +14,7 @@ func _physics_process(_delta: float) -> void:
 
 func get_input():
 	if Input.is_action_just_pressed("ui_select"):
-		apply_central_impulse(position.direction_to(get_global_mouse_position()) * shoot_power)
+		apply_central_impulse(-position.direction_to(get_global_mouse_position()) * shoot_power)
 		var b = bullet.instance()
 		b.start(transform.origin,rotation)
 		get_parent().add_child(b)
