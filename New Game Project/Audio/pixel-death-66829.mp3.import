@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pixel-death-66829.mp3-5f4566b6117a51a030a9c6bcd468063e.mp3str"
+
+[deps]
+
+source_file="res://Audio/pixel-death-66829.mp3"
+dest_files=[ "res://.import/pixel-death-66829.mp3-5f4566b6117a51a030a9c6bcd468063e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

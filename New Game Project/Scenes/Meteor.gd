@@ -5,11 +5,14 @@ var rotationSpeed = 60
 var velocity = Vector2()
 var sideOptions
 var dirtocent
+onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	look_at(Vector2(612,300))
 	var rand = rand_range(0.5,3)
+	
 
 func start():
 	randomize()
@@ -24,12 +27,13 @@ func start():
 	apply_central_impulse(dirtocent * rand_range(40,100))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	checkLocation()
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body.name == "Player":
 		body.queue_free()
+		Global.emit_signal("gameOver")
 	else:
 		queue_free()
 		body.queue_free()
@@ -41,3 +45,8 @@ func checkLocation():
 	if position.y < -200 or position.y > 900:
 		print("GONE")
 		queue_free()
+
+
+func _on_VisibilityNotifier2D_screen_entered() -> void:
+	collision_shape_2d.disabled = false
+	print("enabled")
