@@ -12,7 +12,7 @@ onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 func _ready() -> void:
 	look_at(Vector2(612,300))
 	var rand = rand_range(0.5,3)
-	
+	angular_velocity = rand_range(-0.6,0.6)
 
 func start():
 	randomize()
@@ -22,9 +22,10 @@ func start():
 	var right = Vector2(1200, rand_range(0, 600))
 	
 	sideOptions = [top, bottom, left, right]
-	position = sideOptions[rand_range(0,3)]
+	position = sideOptions[randi()%4]
 	dirtocent = position.direction_to(Vector2(rand_range(200,900),rand_range(200,400)))
-	apply_central_impulse(dirtocent * rand_range(40,100))
+	apply_central_impulse(dirtocent * rand_range(30,120))
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -35,8 +36,9 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		body.queue_free()
 		Global.emit_signal("gameOver")
 	else:
-		queue_free()
+		Global.emit_signal("meteorDestroyed")
 		body.queue_free()
+		queue_free()
 
 func checkLocation():
 	if position.x > 1300 or position.x < -400:

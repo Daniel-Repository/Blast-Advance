@@ -1,12 +1,16 @@
 extends Node2D
 onready var game_over: AudioStreamPlayer = $GameOver
+onready var sound_meteor_destoryed: AudioStreamPlayer = $SoundMeteorDestoryed
 
 
-var meteor = preload("res://Scenes/Meteor1.tscn")
+var meteor1 = preload("res://Scenes/Meteor1.tscn")
+var meteor2 = preload("res://Scenes/Meteor2.tscn")
 
+var arrMeteors = [meteor1, meteor2]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
+	Global.connect("meteorDestroyed", self, "meteorDestroyed")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,9 +19,14 @@ func _ready() -> void:
 
 
 func _on_SpawnTimer_timeout() -> void:
-	var m = meteor.instance()
+	var m = arrMeteors[randi()%2].instance()
 	m.start()
 	get_parent().add_child(m)
 
 func gameOver():
 	game_over.play()
+
+func meteorDestroyed():
+	Global.playerScore += 1
+	#sound_meteor_destoryed.play()
+	print(Global.playerScore)
