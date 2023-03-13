@@ -36,7 +36,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		body.queue_free()
 		Global.emit_signal("gameOver")
 	else:
-		Global.emit_signal("meteorDestroyed")
+		Global.emit_signal("meteorDestroyed", position)
 		body.queue_free()
 		queue_free()
 

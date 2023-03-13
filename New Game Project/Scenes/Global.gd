@@ -2,7 +2,7 @@ extends Node
 
 
 signal gameOver
-signal meteorDestroyed
+signal meteorDestroyed(meteorPosition)
 var playerScore
 
 

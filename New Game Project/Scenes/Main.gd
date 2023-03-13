@@ -7,6 +7,10 @@ var meteor1 = preload("res://Scenes/Meteor1.tscn")
 var meteor2 = preload("res://Scenes/Meteor2.tscn")
 var meteor3 = preload("res://Scenes/Meteor3.tscn")
 
+onready var lblScore = preload("res://Scenes/lblScore.tscn")
+
+onready var scores: CanvasLayer = $Scores
+
 onready var camera_2d: Camera2D = $Camera2D
 
 var arrMeteors = [meteor1, meteor2, meteor3]
@@ -31,7 +35,11 @@ func gameOver():
 	sound_meteor_destoryed.play()
 	game_over.play()
 
-func meteorDestroyed():
+func meteorDestroyed(meteorPosition):
+	var newScore = lblScore.instance()
+	scores.add_child(newScore)
+	newScore.rect_position.x = meteorPosition.x - 20
+	newScore.rect_position.y = meteorPosition.y - 20
 	Global.playerScore += 1
 	camera_2d.add_stress(10)
 	sound_meteor_destoryed.play()
