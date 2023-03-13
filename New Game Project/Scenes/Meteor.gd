@@ -6,7 +6,7 @@ var velocity = Vector2()
 var sideOptions
 var dirtocent
 onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
-
+onready var sprite: Sprite = $Sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,7 +25,6 @@ func start():
 	position = sideOptions[randi()%4]
 	dirtocent = position.direction_to(Vector2(rand_range(200,900),rand_range(200,400)))
 	apply_central_impulse(dirtocent * rand_range(30,120))
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -36,7 +35,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		body.queue_free()
 		Global.emit_signal("gameOver")
 	else:
-		Global.emit_signal("meteorDestroyed", position)
+		Global.emit_signal("meteorDestroyed", position, name)
 		body.queue_free()
 		queue_free()
 

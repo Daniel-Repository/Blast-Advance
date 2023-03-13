@@ -6,6 +6,7 @@ var velocity = Vector2.ZERO
 var bullet = preload("res://Scenes/Bullet.tscn")
 onready var sound_shoot: AudioStreamPlayer = $SoundShoot
 onready var camera_2d: Camera2D = $"../Camera2D"
+onready var anim_player: AnimationPlayer = $animPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	get_input()
 
 func get_input():
-	if Input.is_action_just_pressed("ui_select"):
+	if Input.is_action_just_pressed("ui_accept"):
 		#apply_central_impulse(-position.direction_to(get_global_mouse_position()) * shootPower)
 		apply_central_impulse(Vector2(-cos(rotation),-sin(rotation)) * shootPower)
 		var b = bullet.instance()
@@ -24,6 +25,8 @@ func get_input():
 		get_parent().add_child(b)
 		sound_shoot.play()
 		camera_2d.add_stress(0.2)
+		anim_player.stop(true)
+		anim_player.play("PlayerShoot")
 	
 	if Input.is_action_pressed("ui_left"):
 		angular_velocity = -1 * rotateSpeed
