@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Player2.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Player2Shadow.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Audio/pixel-death-66829.mp3" type="AudioStream" id=5]
 [ext_resource path="res://Audio/shoot_sound.wav" type="AudioStream" id=6]
 [ext_resource path="res://Audio/meteor_destroy.wav" type="AudioStream" id=7]
+[ext_resource path="res://addons/camera_shake/camera_scripts/shake_camera_2D.gd" type="Script" id=8]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
@@ -104,6 +105,8 @@ autostart = true
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 rotating = true
+current = true
+script = ExtResource( 8 )
 
 [node name="GameOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

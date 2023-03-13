@@ -7,6 +7,8 @@ var meteor1 = preload("res://Scenes/Meteor1.tscn")
 var meteor2 = preload("res://Scenes/Meteor2.tscn")
 var meteor3 = preload("res://Scenes/Meteor3.tscn")
 
+onready var camera_2d: Camera2D = $Camera2D
+
 var arrMeteors = [meteor1, meteor2, meteor3]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,9 +27,12 @@ func _on_SpawnTimer_timeout() -> void:
 	get_parent().add_child(m)
 
 func gameOver():
+	camera_2d.add_stress(20)
+	sound_meteor_destoryed.play()
 	game_over.play()
 
 func meteorDestroyed():
 	Global.playerScore += 1
+	camera_2d.add_stress(10)
 	sound_meteor_destoryed.play()
 	print(Global.playerScore)

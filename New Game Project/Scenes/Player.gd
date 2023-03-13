@@ -5,6 +5,7 @@ export var rotateSpeed = 8
 var velocity = Vector2.ZERO
 var bullet = preload("res://Scenes/Bullet.tscn")
 onready var sound_shoot: AudioStreamPlayer = $SoundShoot
+onready var camera_2d: Camera2D = $"../Camera2D"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,6 +23,7 @@ func get_input():
 		b.start(transform.origin,rotation)
 		get_parent().add_child(b)
 		sound_shoot.play()
+		camera_2d.add_stress(0.2)
 	
 	if Input.is_action_pressed("ui_left"):
 		angular_velocity = -1 * rotateSpeed
