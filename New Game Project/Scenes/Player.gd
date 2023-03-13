@@ -1,9 +1,10 @@
 extends RigidBody2D
 
 export var shootPower = 100
-export var rotateSpeed = 5
+export var rotateSpeed = 8
 var velocity = Vector2.ZERO
 var bullet = preload("res://Scenes/Bullet.tscn")
+onready var sound_shoot: AudioStreamPlayer = $SoundShoot
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,15 +12,16 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	#look_at(get_global_mouse_position())
-	get_input(delta)
+	get_input()
 
-func get_input(d):
+func get_input():
 	if Input.is_action_just_pressed("ui_select"):
 		#apply_central_impulse(-position.direction_to(get_global_mouse_position()) * shootPower)
 		apply_central_impulse(Vector2(-cos(rotation),-sin(rotation)) * shootPower)
 		var b = bullet.instance()
 		b.start(transform.origin,rotation)
 		get_parent().add_child(b)
+		sound_shoot.play()
 	
 	if Input.is_action_pressed("ui_left"):
 		angular_velocity = -1 * rotateSpeed

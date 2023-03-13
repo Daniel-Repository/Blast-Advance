@@ -5,8 +5,9 @@ onready var sound_meteor_destoryed: AudioStreamPlayer = $SoundMeteorDestoryed
 
 var meteor1 = preload("res://Scenes/Meteor1.tscn")
 var meteor2 = preload("res://Scenes/Meteor2.tscn")
+var meteor3 = preload("res://Scenes/Meteor3.tscn")
 
-var arrMeteors = [meteor1, meteor2]
+var arrMeteors = [meteor1, meteor2, meteor3]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
@@ -19,7 +20,7 @@ func _ready() -> void:
 
 
 func _on_SpawnTimer_timeout() -> void:
-	var m = arrMeteors[randi()%2].instance()
+	var m = arrMeteors[randi()%3].instance()
 	m.start()
 	get_parent().add_child(m)
 
@@ -28,5 +29,5 @@ func gameOver():
 
 func meteorDestroyed():
 	Global.playerScore += 1
-	#sound_meteor_destoryed.play()
+	sound_meteor_destoryed.play()
 	print(Global.playerScore)
