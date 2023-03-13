@@ -7,10 +7,13 @@ var meteor1 = preload("res://Scenes/Meteor1.tscn")
 var meteor2 = preload("res://Scenes/Meteor2.tscn")
 var meteor3 = preload("res://Scenes/Meteor3.tscn")
 
+var particleMeteorDestroy = preload("res://Particles/particleDestroyMeteor.tscn")
+
 onready var lblScore = preload("res://Scenes/lblScore.tscn")
 onready var lbl_player_score: Label = $UI/lblPlayerScore
 
 onready var scores: CanvasLayer = $Scores
+onready var particles: Node2D = $Particles
 
 onready var camera_2d: Camera2D = $Camera2D
 
@@ -38,6 +41,7 @@ func gameOver():
 
 func meteorDestroyed(meteorPosition, meteorName):
 	var newScore = lblScore.instance()
+	var newMeteorParticle = particleMeteorDestroy.instance()
 	var meteorScore
 	
 	if "Meteor1" in meteorName:
@@ -54,6 +58,10 @@ func meteorDestroyed(meteorPosition, meteorName):
 	Global.playerScore += meteorScore
 	lbl_player_score.text = "Score: " + str(Global.playerScore)
 	
-	camera_2d.add_stress(10)
+	particles.add_child(newMeteorParticle)
+	newMeteorParticle.position.x = meteorPosition.x
+	newMeteorParticle.position.y = meteorPosition.y
+	
+	camera_2d.add_stress(20)
 	sound_meteor_destoryed.play()
 	print(Global.playerScore)
