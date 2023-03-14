@@ -23,7 +23,7 @@ func start():
 	sideOptions = [top, bottom, left, right]
 	position = sideOptions[randi()%4]
 	dirtocent = position.direction_to(Vector2(rand_range(200,900),rand_range(200,400)))
-	apply_central_impulse(dirtocent * rand_range(30,120))
+	apply_central_impulse(dirtocent * rand_range(50,120))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

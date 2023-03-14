@@ -36,7 +36,7 @@ shape = SubResource( 2 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 modulate = Color( 0.67451, 0.67451, 0.67451, 1 )
-position = Vector2( 2.006, 1.987 )
+position = Vector2( 2.87, 2.591 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 

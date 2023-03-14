@@ -1,7 +1,7 @@
 extends Node2D
 onready var game_over: AudioStreamPlayer = $GameOver
 onready var sound_meteor_destoryed: AudioStreamPlayer = $SoundMeteorDestoryed
-
+onready var player: RigidBody2D = $Player
 
 var meteor1 = preload("res://Scenes/Meteor1.tscn")
 var meteor2 = preload("res://Scenes/Meteor2.tscn")
@@ -16,6 +16,7 @@ onready var black_fade: ColorRect = $UI/BlackFade
 onready var upgrade_container: CenterContainer = $UI/UpgradeContainer
 onready var anim_upgrade_ui: AnimationPlayer = $UI/UpgradeContainer/VBoxContainer/animUpgradeUI
 onready var sound_upgrade: AudioStreamPlayer = $UI/UpgradeContainer/SoundUpgrade
+onready var lbl_new_upgrade_text: Label = $UI/UpgradeContainer/VBoxContainer/lblNewUpgradeText
 
 onready var scores: CanvasLayer = $Scores
 onready var particles: Node2D = $Particles
@@ -32,10 +33,6 @@ func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
 	Global.connect("meteorDestroyed", self, "meteorDestroyed")
 	currentStage = 1
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
 
 func _on_SpawnTimer_timeout() -> void:
 	var m = arrMeteors[randi()%3].instance()
@@ -77,13 +74,16 @@ func meteorDestroyed(meteorPosition, meteorName):
 
 func nextStage():
 	currentStage += 1
+	lbl_new_upgrade_text.text = Upgrades.getUpgradeText(currentStage)
 	get_tree().paused = true
 	black_fade.visible = true
 	upgrade_container.visible = true
 	anim_upgrade_ui.play("UpgradeUI")
 	sound_upgrade.play()
 	
-	var timeDecrease = (spawn_timer.wait_time / 100) * 10
+	player.playerUpgrade(currentStage)
+	
+	var timeDecrease = (spawn_timer.wait_time / 100) * 15
 	spawn_timer.wait_time -= timeDecrease
 
 func _on_progressUpgrade_value_changed(value: float) -> void:

@@ -35,6 +35,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Scenes/Global.gd"
+Upgrades="*res://Scenes/Upgrades.gd"
 
 [display]
 
