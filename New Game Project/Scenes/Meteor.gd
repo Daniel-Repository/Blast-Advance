@@ -11,7 +11,7 @@ onready var sprite: Sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	look_at(Vector2(612,300))
-	angular_velocity = rand_range(-0.6,0.6)
+	angular_velocity = rand_range(-0.8,0.8)
 
 func start():
 	randomize()
@@ -23,7 +23,7 @@ func start():
 	sideOptions = [top, bottom, left, right]
 	position = sideOptions[randi()%4]
 	dirtocent = position.direction_to(Vector2(rand_range(200,900),rand_range(200,400)))
-	apply_central_impulse(dirtocent * rand_range(50,120))
+	apply_central_impulse(dirtocent * rand_range(60,140))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

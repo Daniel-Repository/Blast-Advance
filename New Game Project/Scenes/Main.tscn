@@ -104,7 +104,7 @@ tracks/1/keys = {
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
-colors = PoolColorArray( 0.850586, 0.614746, 0.357728, 1 )
+colors = PoolColorArray( 0.867188, 0.609457, 0.328583, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -171,7 +171,7 @@ margin_bottom = 49.0
 rect_min_size = Vector2( 0, 4 )
 custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 8 )
-max_value = 30.0
+max_value = 70.0
 step = 1.0
 percent_visible = false
 
@@ -234,6 +234,9 @@ anims/UpgradeUI = SubResource( 13 )
 stream = ExtResource( 10 )
 volume_db = -5.643
 
+[node name="upgradeTimer" type="Timer" parent="UI"]
+one_shot = true
+
 [node name="BackgroundColour" type="Sprite" parent="."]
 position = Vector2( 622, 368 )
 scale = Vector2( 1.34717, 1089.25 )
@@ -245,8 +248,6 @@ z_index = 2
 collision_mask = 3
 linear_damp = 1.0
 script = ExtResource( 3 )
-shootPower = null
-rotateSpeed = null
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
 rotation = 1.5708
@@ -317,7 +318,7 @@ __meta__ = {
 shape = SubResource( 3 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 2.2
+wait_time = 2.0
 autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -340,4 +341,6 @@ volume_db = 5.0
 [node name="Particles" type="Node2D" parent="."]
 
 [connection signal="value_changed" from="UI/ScoreContainer/progressUpgrade" to="." method="_on_progressUpgrade_value_changed"]
+[connection signal="timeout" from="UI/upgradeTimer" to="UI" method="_on_upgradeTimer_timeout"]
+[connection signal="reloading" from="Player" to="." method="_on_Player_reloading"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
