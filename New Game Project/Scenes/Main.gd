@@ -13,11 +13,15 @@ onready var lblScore = preload("res://Scenes/lblScore.tscn")
 onready var lbl_player_score: Label = $UI/ScoreContainer/lblPlayerScore
 onready var progress_upgrade: ProgressBar = $UI/ScoreContainer/progressUpgrade
 onready var black_fade: ColorRect = $UI/BlackFade
+onready var upgrade_container: CenterContainer = $UI/UpgradeContainer
+onready var anim_upgrade_ui: AnimationPlayer = $UI/UpgradeContainer/VBoxContainer/animUpgradeUI
+onready var sound_upgrade: AudioStreamPlayer = $UI/UpgradeContainer/SoundUpgrade
 
 onready var scores: CanvasLayer = $Scores
 onready var particles: Node2D = $Particles
 
 onready var camera_2d: Camera2D = $Camera2D
+onready var spawn_timer: Timer = $SpawnTimer
 
 var arrMeteors = [meteor1, meteor2, meteor3]
 
@@ -28,7 +32,6 @@ func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
 	Global.connect("meteorDestroyed", self, "meteorDestroyed")
 	currentStage = 1
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
@@ -71,12 +74,17 @@ func meteorDestroyed(meteorPosition, meteorName):
 	
 	camera_2d.add_stress(20)
 	sound_meteor_destoryed.play()
-	print(Global.playerScore)
 
 func nextStage():
 	currentStage += 1
 	get_tree().paused = true
 	black_fade.visible = true
+	upgrade_container.visible = true
+	anim_upgrade_ui.play("UpgradeUI")
+	sound_upgrade.play()
+	
+	var timeDecrease = (spawn_timer.wait_time / 100) * 10
+	spawn_timer.wait_time -= timeDecrease
 
 func _on_progressUpgrade_value_changed(value: float) -> void:
 	if value >= progress_upgrade.max_value:

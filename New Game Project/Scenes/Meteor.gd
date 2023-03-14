@@ -40,13 +40,9 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 func checkLocation():
 	if position.x > 1300 or position.x < -400:
-		print("GONE")
 		queue_free()
 	if position.y < -200 or position.y > 900:
-		print("GONE")
 		queue_free()
-
 
 func _on_VisibilityNotifier2D_screen_entered() -> void:
 	collision_shape_2d.disabled = false
-	print("enabled")
