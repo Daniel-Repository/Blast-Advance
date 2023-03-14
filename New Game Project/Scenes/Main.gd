@@ -10,7 +10,9 @@ var meteor3 = preload("res://Scenes/Meteor3.tscn")
 var particleMeteorDestroy = preload("res://Particles/particleDestroyMeteor.tscn")
 
 onready var lblScore = preload("res://Scenes/lblScore.tscn")
-onready var lbl_player_score: Label = $UI/lblPlayerScore
+onready var lbl_player_score: Label = $UI/ScoreContainer/lblPlayerScore
+onready var progress_upgrade: ProgressBar = $UI/ScoreContainer/progressUpgrade
+onready var black_fade: ColorRect = $UI/BlackFade
 
 onready var scores: CanvasLayer = $Scores
 onready var particles: Node2D = $Particles
@@ -19,10 +21,13 @@ onready var camera_2d: Camera2D = $Camera2D
 
 var arrMeteors = [meteor1, meteor2, meteor3]
 
+var currentStage
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
 	Global.connect("meteorDestroyed", self, "meteorDestroyed")
+	currentStage = 1
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,6 +63,8 @@ func meteorDestroyed(meteorPosition, meteorName):
 	Global.playerScore += meteorScore
 	lbl_player_score.text = "Score: " + str(Global.playerScore)
 	
+	progress_upgrade.value += meteorScore
+	
 	particles.add_child(newMeteorParticle)
 	newMeteorParticle.position.x = meteorPosition.x
 	newMeteorParticle.position.y = meteorPosition.y
@@ -65,3 +72,14 @@ func meteorDestroyed(meteorPosition, meteorName):
 	camera_2d.add_stress(20)
 	sound_meteor_destoryed.play()
 	print(Global.playerScore)
+
+func nextStage():
+	currentStage += 1
+	get_tree().paused = true
+	black_fade.visible = true
+
+func _on_progressUpgrade_value_changed(value: float) -> void:
+	if value >= progress_upgrade.max_value:
+		nextStage()
+		progress_upgrade.value = 0
+		progress_upgrade.max_value += 20

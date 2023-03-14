@@ -70,7 +70,7 @@ tracks/0/keys = {
 }
 
 [node name="particleDestroyMeteor" type="Particles2D"]
-scale = Vector2( 5, 5 )
+scale = Vector2( 6, 6 )
 emitting = false
 amount = 130
 one_shot = true

@@ -11,7 +11,6 @@ onready var sprite: Sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	look_at(Vector2(612,300))
-	var rand = rand_range(0.5,3)
 	angular_velocity = rand_range(-0.6,0.6)
 
 func start():
