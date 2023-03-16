@@ -4,10 +4,10 @@
 [ext_resource path="res://Assets/Meteor1.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 39.2046
+radius = 65.0
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 39.0128
+radius = 55.0
 
 [node name="Meteor1" type="RigidBody2D"]
 collision_layer = 8
@@ -37,11 +37,11 @@ shape = SubResource( 1 )
 [node name="Sprite2" type="Sprite" parent="."]
 modulate = Color( 0.607843, 0.607843, 0.607843, 1 )
 position = Vector2( 2.882, 2.745 )
-scale = Vector2( 5, 5 )
+scale = Vector2( 8, 8 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 5, 5 )
+scale = Vector2( 8, 8 )
 texture = ExtResource( 2 )
 
 [connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]

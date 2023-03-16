@@ -18,6 +18,7 @@ onready var anim_upgrade_ui: AnimationPlayer = $UI/UpgradeContainer/VBoxContaine
 onready var sound_upgrade: AudioStreamPlayer = $UI/UpgradeContainer/SoundUpgrade
 onready var lbl_new_upgrade_text: Label = $UI/UpgradeContainer/VBoxContainer/lblNewUpgradeText
 onready var upgrade_timer: Timer = $UI/upgradeTimer
+onready var lbl_new_upgrade_title: Label = $UI/UpgradeContainer/VBoxContainer/lblNewUpgradeTitle
 
 onready var scores: CanvasLayer = $Scores
 onready var particles: Node2D = $Particles
@@ -53,9 +54,9 @@ func meteorDestroyed(meteorPosition, meteorName):
 	if "Meteor1" in meteorName:
 		meteorScore = 5
 	elif "Meteor2" in meteorName:
-		meteorScore = 5
-	elif "Meteor3" in meteorName:
 		meteorScore = 10
+	elif "Meteor3" in meteorName:
+		meteorScore = 15
 	
 	newScore.text = "+" + str(meteorScore)
 	scores.add_child(newScore)
@@ -75,6 +76,9 @@ func meteorDestroyed(meteorPosition, meteorName):
 
 func nextStage():
 	currentStage += 1
+	if currentStage == 6:
+		lbl_new_upgrade_title.text = "Last Upgrade!"
+		progress_upgrade.value = progress_upgrade.max_value
 	lbl_new_upgrade_text.text = Upgrades.getUpgradeText(currentStage)
 	get_tree().paused = true
 	black_fade.visible = true
@@ -84,11 +88,11 @@ func nextStage():
 	upgrade_timer.start()
 	player.playerUpgrade(currentStage)
 	
-	var timeDecrease = (spawn_timer.wait_time / 100) * 20
+	var timeDecrease = (spawn_timer.wait_time / 100) * 25
 	spawn_timer.wait_time -= timeDecrease
 
 func _on_progressUpgrade_value_changed(value: float) -> void:
-	if value >= progress_upgrade.max_value:
+	if value >= progress_upgrade.max_value && currentStage <= 6:
 		nextStage()
 		progress_upgrade.value = 0
 		progress_upgrade.max_value += 20

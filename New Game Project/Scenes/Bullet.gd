@@ -8,10 +8,10 @@ var velocity = Vector2()
 func _ready() -> void:
 	pass # Replace with function body.
 
-func start(_position, _direction):
+func start(_speed, _position, _direction):
 	rotation = _direction
 	position = _position
-	velocity = Vector2(speed, 0).rotated(rotation)
+	velocity = Vector2(_speed, 0).rotated(rotation)
 
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
