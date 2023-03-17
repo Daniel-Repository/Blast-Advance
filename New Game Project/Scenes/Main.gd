@@ -19,6 +19,9 @@ onready var sound_upgrade: AudioStreamPlayer = $UI/UpgradeContainer/SoundUpgrade
 onready var lbl_new_upgrade_text: Label = $UI/UpgradeContainer/VBoxContainer/lblNewUpgradeText
 onready var upgrade_timer: Timer = $UI/upgradeTimer
 onready var lbl_new_upgrade_title: Label = $UI/UpgradeContainer/VBoxContainer/lblNewUpgradeTitle
+onready var game_over_container: CenterContainer = $UI/GameOverContainer
+onready var lbl_score: Label = $UI/GameOverContainer/vboxGameoverContent/lblScore
+
 
 onready var scores: CanvasLayer = $Scores
 onready var particles: Node2D = $Particles
@@ -26,7 +29,10 @@ onready var particles: Node2D = $Particles
 onready var camera_2d: Camera2D = $Camera2D
 onready var spawn_timer: Timer = $SpawnTimer
 
+onready var anim_controls: AnimationPlayer = $UI/ControlsContainer/animControls
+
 var arrMeteors = [meteor1, meteor2, meteor3]
+
 
 var currentStage
 
@@ -34,6 +40,7 @@ var currentStage
 func _ready() -> void:
 	Global.connect("gameOver", self, "gameOver")
 	Global.connect("meteorDestroyed", self, "meteorDestroyed")
+	Global.connect("gameStart",self,"startSpawning")
 	currentStage = 1
 
 func _on_SpawnTimer_timeout() -> void:
@@ -45,6 +52,11 @@ func gameOver():
 	camera_2d.add_stress(20)
 	sound_meteor_destoryed.play()
 	game_over.play()
+	black_fade.visible = true
+	lbl_score.text = "SCORE: " + str(Global.playerScore)
+	game_over_container.visible = true
+	Global.gameIsOver = true
+	upgrade_timer.start()
 
 func meteorDestroyed(meteorPosition, meteorName):
 	var newScore = lblScore.instance()
@@ -95,5 +107,8 @@ func _on_progressUpgrade_value_changed(value: float) -> void:
 	if value >= progress_upgrade.max_value && currentStage <= 6:
 		nextStage()
 		progress_upgrade.value = 0
-		progress_upgrade.max_value += 20
+		progress_upgrade.max_value += 40
 
+func startSpawning():
+	spawn_timer.start()
+	anim_controls.play("ControlsFadeOut")

@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 export var shootPower = 120
-export var rotateSpeed = 8
+export var rotateSpeed = 9
 var velocity = Vector2.ZERO
 
 var bullet = preload("res://Scenes/Bullet.tscn")
@@ -24,6 +24,7 @@ var bulletCount
 var reloadCount
 var reloading
 var bulletSpeed
+var gameStart
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,6 +35,7 @@ func _ready() -> void:
 	reloadCount = 20
 	bulletSpeed = 500
 	reloading = false
+	gameStart = false
 
 func _physics_process(delta: float) -> void:
 	
@@ -90,6 +92,10 @@ func get_input():
 			var b = currentBullet.instance()
 			b.start(bulletSpeed,transform.origin,rotation)
 			get_parent().add_child(b)
+		
+		if gameStart == false:
+			gameStart = true
+			Global.emit_signal("gameStart")
 		
 		#reloadCount -= 1
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Assets/Player2.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Player2Shadow.png" type="Texture" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://Fonts/Retro Gaming.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Audio/upgrade.wav" type="AudioStream" id=10]
 [ext_resource path="res://Scenes/UI.gd" type="Script" id=11]
+[ext_resource path="res://Assets/WASD.png" type="Texture" id=12]
+[ext_resource path="res://Assets/spacebar-icon-25.png" type="Texture" id=13]
+[ext_resource path="res://Assets/gamepad_rotate.png" type="Texture" id=14]
+[ext_resource path="res://Assets/gamepad_shoot.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=4]
 size = 32
@@ -21,6 +25,18 @@ bg_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=19]
+size = 64
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=20]
+size = 42
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=21]
+size = 24
+font_data = ExtResource( 9 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 42
@@ -102,9 +118,51 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -8 ), Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="DynamicFont" id=14]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="Animation" id=17]
+resource_name = "ControlsFadeOut"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
-colors = PoolColorArray( 0.835938, 0.560931, 0.26123, 1 )
+colors = PoolColorArray( 0.886719, 0.581747, 0.24939, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -122,7 +180,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.7, 0.7 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -155,8 +213,8 @@ script = ExtResource( 11 )
 [node name="ScoreContainer" type="VBoxContainer" parent="UI"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 240.0
+margin_bottom = 59.0
 
 [node name="lblPlayerScore" type="Label" parent="UI/ScoreContainer"]
 margin_right = 230.0
@@ -181,7 +239,50 @@ percent_visible = false
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.341176 )
+color = Color( 0, 0, 0, 0.423529 )
+
+[node name="GameOverContainer" type="CenterContainer" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="vboxGameoverContent" type="VBoxContainer" parent="UI/GameOverContainer"]
+margin_left = 301.0
+margin_top = 192.0
+margin_right = 722.0
+margin_bottom = 407.0
+custom_constants/separation = 24
+
+[node name="lblGameOver2" type="Label" parent="UI/GameOverContainer/vboxGameoverContent"]
+margin_right = 421.0
+margin_bottom = 82.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 6
+custom_fonts/font = SubResource( 19 )
+text = "GAME OVER"
+align = 1
+uppercase = true
+
+[node name="lblScore" type="Label" parent="UI/GameOverContainer/vboxGameoverContent"]
+margin_top = 106.0
+margin_right = 421.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 20 )
+text = "Score:"
+align = 1
+uppercase = true
+
+[node name="lblRESTART" type="Label" parent="UI/GameOverContainer/vboxGameoverContent"]
+margin_top = 184.0
+margin_right = 421.0
+margin_bottom = 215.0
+rect_min_size = Vector2( 400, 0 )
+custom_colors/font_color = Color( 0.72549, 0.72549, 0.72549, 1 )
+custom_fonts/font = SubResource( 21 )
+text = "SHOOT TO RESTART"
+align = 1
+autowrap = true
 
 [node name="UpgradeContainer" type="CenterContainer" parent="UI"]
 visible = false
@@ -237,8 +338,132 @@ anims/UpgradeUI = SubResource( 13 )
 stream = ExtResource( 10 )
 volume_db = -5.643
 
-[node name="upgradeTimer" type="Timer" parent="UI"]
+[node name="upgradeTimer" type="Timer" parent="UI" groups=["Meteors"]]
 one_shot = true
+
+[node name="ControlsContainer" type="CenterContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 200.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ControlsContainer"]
+margin_left = 198.0
+margin_top = 142.0
+margin_right = 826.0
+margin_bottom = 258.0
+custom_constants/separation = 116
+
+[node name="vboxRotate" type="VBoxContainer" parent="UI/ControlsContainer/HBoxContainer"]
+margin_right = 256.0
+margin_bottom = 116.0
+custom_constants/separation = 15
+
+[node name="lblRotate" type="Label" parent="UI/ControlsContainer/HBoxContainer/vboxRotate"]
+margin_right = 256.0
+margin_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+custom_colors/font_color = Color( 0.321569, 0.321569, 0.321569, 0.462745 )
+custom_fonts/font = SubResource( 14 )
+text = "ROTATE"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ControlsContainer/HBoxContainer/vboxRotate"]
+margin_top = 56.0
+margin_right = 256.0
+margin_bottom = 116.0
+custom_constants/separation = 16
+
+[node name="texWASD" type="TextureRect" parent="UI/ControlsContainer/HBoxContainer/vboxRotate/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.462745 )
+margin_right = 100.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 60 )
+texture = ExtResource( 12 )
+expand = true
+stretch_mode = 6
+
+[node name="lblShoot2" type="Label" parent="UI/ControlsContainer/HBoxContainer/vboxRotate/HBoxContainer"]
+margin_left = 116.0
+margin_top = 19.0
+margin_right = 140.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 0.321569, 0.321569, 0.321569, 0.462745 )
+custom_fonts/font = SubResource( 16 )
+text = "OR"
+align = 1
+
+[node name="texGamePadRotate" type="TextureRect" parent="UI/ControlsContainer/HBoxContainer/vboxRotate/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.462745 )
+margin_left = 156.0
+margin_right = 256.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 60 )
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 6
+
+[node name="vboxShoot" type="VBoxContainer" parent="UI/ControlsContainer/HBoxContainer"]
+margin_left = 372.0
+margin_right = 628.0
+margin_bottom = 116.0
+custom_constants/separation = 15
+alignment = 1
+
+[node name="lblShoot" type="Label" parent="UI/ControlsContainer/HBoxContainer/vboxShoot"]
+margin_right = 256.0
+margin_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+custom_colors/font_color = Color( 0.321569, 0.321569, 0.321569, 0.462745 )
+custom_fonts/font = SubResource( 15 )
+text = "SHOOT"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ControlsContainer/HBoxContainer/vboxShoot"]
+margin_top = 56.0
+margin_right = 256.0
+margin_bottom = 116.0
+custom_constants/separation = 16
+
+[node name="texSpace" type="TextureRect" parent="UI/ControlsContainer/HBoxContainer/vboxShoot/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.462745 )
+margin_right = 100.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 60 )
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 6
+
+[node name="lblShoot2" type="Label" parent="UI/ControlsContainer/HBoxContainer/vboxShoot/HBoxContainer"]
+margin_left = 116.0
+margin_top = 19.0
+margin_right = 140.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 0.321569, 0.321569, 0.321569, 0.462745 )
+custom_fonts/font = SubResource( 16 )
+text = "OR"
+align = 1
+
+[node name="texGamePadShoot" type="TextureRect" parent="UI/ControlsContainer/HBoxContainer/vboxShoot/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.462745 )
+margin_left = 156.0
+margin_right = 256.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 60 )
+texture = ExtResource( 15 )
+expand = true
+stretch_mode = 6
+
+[node name="animControls" type="AnimationPlayer" parent="UI/ControlsContainer"]
+anims/ControlsFadeOut = SubResource( 17 )
+anims/RESET = SubResource( 18 )
 
 [node name="BackgroundColour" type="Sprite" parent="."]
 position = Vector2( 622, 368 )
@@ -322,7 +547,6 @@ shape = SubResource( 3 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

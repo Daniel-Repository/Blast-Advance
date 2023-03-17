@@ -12,6 +12,7 @@ onready var sprite: Sprite = $Sprite
 func _ready() -> void:
 	look_at(Vector2(612,300))
 	angular_velocity = rand_range(-0.8,0.8)
+	add_to_group("Meteors")
 
 func start():
 	randomize()
