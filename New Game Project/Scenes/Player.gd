@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 export var shootPower = 120
-export var rotateSpeed = 9
+export var rotateSpeed = 8
 var velocity = Vector2.ZERO
 
 var bullet = preload("res://Scenes/Bullet.tscn")
